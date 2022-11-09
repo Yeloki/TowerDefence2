@@ -1,3 +1,8 @@
+class Color:
+    def __init__(self, r: int, g: int, b: int, a: float):
+        self.rgba = (r, g, b, a)
+
+
 class Vector:
     def __init__(self, x: float, y: float):
         self.x = x
