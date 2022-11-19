@@ -5,7 +5,7 @@ class GeometryObject:
     def draw(self):
         pass
 
-    def update(self):
+    def update(self, event):
         pass
 
 
@@ -18,3 +18,6 @@ class Circle(GeometryObject):
 
     def draw(self, display):
         pg.draw.circle(display, self.__color, self.__radius, self.__depth)
+
+    def update(self, event):
+        pass
