@@ -1,0 +1,4 @@
+project:
+  name: TowerDefence2
+  sources: src
+  logs: logs
