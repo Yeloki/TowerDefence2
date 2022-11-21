@@ -2,3 +2,9 @@ project:
   name: TowerDefence2
   sources: src
   logs: logs
+
+game:
+  managers:
+    map:
+      field-size-x: 2000
+      field-size-y: 1000
