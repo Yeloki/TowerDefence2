@@ -33,7 +33,7 @@ def find_settings() -> Path:
 
 
 def get_base_path() -> Path:
-    from settings import SETTINGS
+    from .settings import SETTINGS
     project_name = SETTINGS['project']['name']
     pwd = Path(os.path.abspath(os.path.curdir))
     while pwd != pwd.parent:

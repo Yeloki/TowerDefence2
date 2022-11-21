@@ -1,5 +1,7 @@
+import logging
+
 import yaml
-from common import find_settings
+from .common import find_settings
 
 
 def make_fields_better(obj):
@@ -12,10 +14,11 @@ def make_fields_better(obj):
     elif isinstance(obj, str):
         if obj.isdigit():
             obj = int(obj)
-        try:
-            obj = float(obj)
-        except ValueError:
-            pass
+        else:
+            try:
+                obj = float(obj)
+            except ValueError:
+                pass
     return obj
 
 
@@ -23,4 +26,3 @@ settings_path = find_settings()
 settings_file = open(settings_path, mode='r')
 SETTINGS = make_fields_better(yaml.load(settings_file, yaml.BaseLoader))
 settings_file.close()
-print(SETTINGS)
