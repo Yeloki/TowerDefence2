@@ -1,6 +1,7 @@
 import os
 from pathlib import Path
 from typing import List
+from secrets import token_hex
 
 
 def get_files_from_path(path: Path) -> List[Path]:
@@ -33,12 +34,18 @@ def find_settings() -> Path:
 
 
 def get_base_path() -> Path:
-    from settings import NAME
+    from .settings import SETTINGS
+    project_name = SETTINGS['project']['name']
     pwd = Path(os.path.abspath(os.path.curdir))
     while pwd != pwd.parent:
         for path in pwd.iterdir():
-            if path.is_dir() and path.name == NAME:
+            if path.is_dir() and path.name == project_name:
                 return path
         pwd = pwd.parent
-    raise RuntimeError(f"Cannot find {NAME} directory, "
-                       "try to run script from another directory")
+    raise RuntimeError(f"Cannot find {project_name} directory,\n"
+                       "rename directory or change settings.yaml file"
+                       "and try again")
+
+
+def generate_uid() -> str:
+    return token_hex(16)

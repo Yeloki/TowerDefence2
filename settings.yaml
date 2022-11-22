@@ -1,4 +1,12 @@
 project:
   name: TowerDefence2
   sources: src
+  maps: maps
   logs: logs
+
+game:
+  managers:
+    map:
+      field-size-x: 2000
+      field-size-y: 1000
+      road-width: 30
