@@ -1,6 +1,7 @@
 import os
 from pathlib import Path
 from typing import List
+from secrets import token_hex
 
 
 def get_files_from_path(path: Path) -> List[Path]:
@@ -44,3 +45,7 @@ def get_base_path() -> Path:
     raise RuntimeError(f"Cannot find {project_name} directory,\n"
                        "rename directory or change settings.yaml file"
                        "and try again")
+
+
+def generate_uid() -> str:
+    return token_hex(16)
