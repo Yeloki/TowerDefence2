@@ -10,7 +10,7 @@ LOG_CONFIG = {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
             'filename': get_base_path() / SETTINGS['project']['logs'] / 'latest.log',
-            "formatter": "DEBUG",
+            'formatter': 'DEBUG',
         },
     },
     'loggers': {
@@ -21,16 +21,15 @@ LOG_CONFIG = {
 
         },
     },
-    "formatters": {
-        "DEBUG": {
-            "format": "%(asctime)s | %(name)s | %(levelname)s | %(message)s | %(uid)s",
-            "default": {"uid": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF"},
+    'formatters': {
+        'DEBUG': {
+            'format': '%(asctime)s | %(name)s | %(levelname)-10s | %(message)s | %(uid)s',
+            'default': {'uid': 'FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF'},
         },
 
     },
 }
 logging.captureWarnings(True)
 logging.config.dictConfig(LOG_CONFIG)
-a = logging.Formatter("%(asctime)s | %(name)s | %(levelname)s | %(message)s | %(uid)s", defaults={"uid": None})
 logger = logging.getLogger('default')
 logger.handlers[0].formatter._style._defaults = LOG_CONFIG['formatters']['DEBUG']['default']

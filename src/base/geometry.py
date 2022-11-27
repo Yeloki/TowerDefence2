@@ -15,6 +15,9 @@ class Vector2:
     def __len__(self):
         return (self.x ** 2 + self.y ** 2) ** 0.5
 
+    def __str__(self):
+        return f'Vector2({self.x}, {self.y})'
+
     def __iter__(self):
         for i in [self.x, self.y]:
             yield i
@@ -30,16 +33,15 @@ class Rect:
 
 class Circle:
     def __init__(self, color: Color, coords: Vector2, radius: float, width: int):
-        self.__color = color
-        self.__center_coords = coords
-        self.__radius = radius
-        self.__width = width
+        self._color = color
+        self._center = coords
+        self._radius = radius
+        self._width = width
 
 
 class Line:
     def __init__(self, color: Color, start: Vector2, end: Vector2, width: int):
-        self.__color = color
-        self.__start_pos = start
-        self.__end_pos = end
-        self.__width = width
-
+        self._color = color
+        self._start_pos = start
+        self._end_pos = end
+        self._width = width

@@ -1,7 +1,7 @@
 from tools import generate_uid
-from base import Color, Rect, Vector2
+from base import Rect
+from .common import Color
 import pygame
-
 
 
 class Label:
@@ -16,8 +16,8 @@ class Label:
 
     def __search_size(self):
         w, h = self.__rect.size
-        min = 1
-        max = 100
+        min = 1  # replace with min_font_size
+        max = 100  # replace with max_font_size
         while True:
             mid = (max + min) // 2
             font = pygame.font.Font(None, mid)
@@ -43,7 +43,7 @@ class Label:
     def draw(self, screen):
         screen.blit(self.__surface, self.__rect.corner_coords)
 
-    def set_rect(self, rect: Rect ):
+    def set_rect(self, rect: Rect):
         self.__rect = rect
         self.__render()
 
