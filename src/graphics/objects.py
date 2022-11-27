@@ -9,10 +9,13 @@ class DrawableCircle(Circle):
 
 class DrawableRect(Rect):
     def draw(self, screen):
-        pygame.draw.rect(screen, self.__color.rgba, self.__center, self.__radius)
+        pygame.draw.rect(screen, self.__color.rgba, pygame.Rect(self.corner_coords, self.size), width=self.__width)
 
 
 class DrawableLine(Line):
     def draw(self, screen):
-        pygame.draw.circle(screen, self.__color.rgba, self.__center, self.__radius)
+        pygame.draw.circle(screen, self.__color.rgba, self.__start_pos, self.__end_pos, width=self.__width)
 
+
+class DrawableText(Text):
+    pass

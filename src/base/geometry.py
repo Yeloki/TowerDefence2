@@ -35,7 +35,7 @@ class Circle:
 
 
 class Line:
-    def __init__(self, color: Color, start, end, width: int):
+    def __init__(self, color: Color, start: Vector2, end: Vector2, width: int):
         self.__color = color
         self.__start_pos = start
         self.__end_pos = end
