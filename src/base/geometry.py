@@ -1,4 +1,4 @@
-from ..graphics.graphics_base import Color
+from ..graphics.common import Color
 
 
 class Vector2:
