@@ -8,6 +8,20 @@ class Label:
         self.__antialias = antialias
         self.__color = color
         self.__rect = rect
+        self.__surface = pygame.Surface(rect.size)
+        self.__render()
+
+    def __render(self):
+        pass
+
+    def draw(self, ):
+        pass
+
+    def set_size(self):
+        pass
+
+    def set_size(self):
+        pass
 
 
 class Button:
@@ -19,3 +33,17 @@ class Button:
         self.__pressed_style = None
 
         self.__text = None
+    
+
+class Widget:
+    def __init__(self):
+        pass
+
+    def add_button(self):
+        pass
+
+    def add_label(self):
+        pass
+
+    def set_backgrounf(self):
+        pass
