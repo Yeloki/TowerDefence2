@@ -1,6 +1,7 @@
 from tools import generate_uid
 from base import Color, Rect
 
+
 class Label:
     def __init__(self, text: str, antialias: bool, color: Color, rect: Rect):
         self.__text = text
@@ -9,15 +10,40 @@ class Label:
         self.__rect = rect
         self.__surface = pygame.Surface(rect.size)
         self.__render()
+        self.__font_size = None
+
+    def __search_size(self):
+        w, h = self.__rect.size
+        min = 1
+        max = 100
+        while True:
+            mid = (max + min) // 2
+            font = pygame.font.Font(None, mid)
+            wc, hc = font.render(self.__text, self.__antialias, self.__color.rgba).get_rect().get_size()
+            if wc == w and hc == h:
+                self.__font_size = mid
+                break
+            elif wc > w or hc > h:
+                max = mid - 1
+            elif w > wc or h > hc:
+                min = mid + 1
+
+            if min > max:
+                self.__font_size = mid
+                break
 
     def __render(self):
-        pass
+        self.__search_size()
+        font = pygame.font.Font(None, self.__font_size)
+        text = font.render(self.__text, self.__antialias, self.__color.rgba)
+        self.__surface.blit(text, (0, 0))
 
-    def draw(self, ):
-        pass
+    def draw(self, screen):
+        screen.blit(self.__surface, self.__rect.corner_coords)
 
-    def set_size(self, size: Vector2):
-        self.__
+    def set_rect(self, rect: Rect ):
+        self.__rect = rect
+        self.__render()
 
     def set_label(self, text):
         self.__text = text
