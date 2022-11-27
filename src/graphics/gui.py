@@ -12,11 +12,22 @@ class Label:
 
 
 class Button:
-    def __init__(self):
-        self.__uid = generate_uid()
-        self.__style = None
+    def __init__(self, color: Color):
+        self.__color = color
 
+        self.__style = None
         self.__pressed = False
         self.__pressed_style = None
-
         self.__text = None
+        self.__uid = generate_uid()
+
+    def pressed(self):
+        pass
+
+
+class CircleButton(Button):
+    pass
+
+
+class RectButton(Button):
+    pass
