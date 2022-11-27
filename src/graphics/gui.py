@@ -1,5 +1,6 @@
 from tools import generate_uid
 from base import Rect, Vector2
+from objects import Color
 import pygame
 
 
@@ -52,7 +53,7 @@ class Label:
 
 
 class Button:
-    def __init__(self, color: Color):
+    def __init__(self, color=Color(0, 0, 0, 100)):
         self._color = color
         self._style = None
         self._pressed = False
@@ -68,11 +69,15 @@ class Button:
 
 
 class CircleButton(Button):
-    pass
+    def __init__(self, circle: Circle, color=Color(0, 0, 0, 100)):
+        super().__init__(color=color)
+        self.circle = circle
 
 
 class RectButton(Button):
-    pass
+    def __init__(self, rect: rect, color=Color(0, 0, 0, 100)):
+        super().__init__(color=color)
+        self.rect = rect
 
 
 class Widget:
