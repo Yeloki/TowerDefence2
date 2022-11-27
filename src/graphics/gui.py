@@ -1,7 +1,6 @@
 from tools import generate_uid
 from base import Color, Rect
 
-
 class Label:
     def __init__(self, text: str, antialias: bool, color: Color, rect: Rect):
         self.__text = text
@@ -17,11 +16,12 @@ class Label:
     def draw(self, ):
         pass
 
-    def set_size(self):
-        pass
+    def set_size(self, size: Vector2):
+        self.__
 
-    def set_size(self):
-        pass
+    def set_label(self, text):
+        self.__text = text
+        self.__render()
 
 
 class Button:
@@ -33,7 +33,7 @@ class Button:
         self.__pressed_style = None
 
         self.__text = None
-    
+
 
 class Widget:
     def __init__(self):
