@@ -1,5 +1,3 @@
-import pygame.draw
-
 from graphics import Color
 
 
@@ -45,10 +43,3 @@ class Line:
         self.__end_pos = end
         self.__width = width
 
-
-class Text:
-    def __init__(self, text: str, antialias: bool, color: Color, rect: Rect):
-        self.__text = text
-        self.__antialias = antialias
-        self.__color = color
-        self.__rect = rect

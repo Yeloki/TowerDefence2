@@ -1,5 +1,5 @@
 from base import Circle, Rect, Line, Text
-from ..tools import generate_uid
+
 import pygame
 
 
@@ -18,16 +18,3 @@ class DrawableLine(Line):
         pygame.draw.circle(screen, self.__color.rgba, self.__start_pos, self.__end_pos, width=self.__width)
 
 
-class DrawableText(Text):
-    pass
-
-
-class Button:
-    def __init__(self):
-        self.__uid = generate_uid()
-        self.__style = None
-
-        self.__pressed = False
-        self.__pressed_style = None
-
-        self.__text = None
