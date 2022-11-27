@@ -45,7 +45,8 @@ class Line:
 
 
 class Text:
-    def __init__(self, text: str, antialias: bool, color: Color):
+    def __init__(self, text: str, antialias: bool, color: Color, rect: Rect):
         self.__text = text
         self.__antialias = antialias
         self.__color = color
+        self.__rect = rect
