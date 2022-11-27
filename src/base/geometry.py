@@ -34,7 +34,7 @@ class Rect:
 class Circle:
     def __init__(self, color: Color, coords: Vector2, radius: float, width: int):
         self._color = color
-        self._center_coords = coords
+        self._center = coords
         self._radius = radius
         self._width = width
 
