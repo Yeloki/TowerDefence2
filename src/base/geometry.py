@@ -1,6 +1,4 @@
-import pygame.draw
-
-from ..graphics.common import Color
+from graphics import Color
 
 
 class Vector2:
@@ -16,6 +14,10 @@ class Vector2:
 
     def __len__(self):
         return (self.x ** 2 + self.y ** 2) ** 0.5
+
+    def __iter__(self):
+        for i in [self.x, self.y]:
+            yield i
 
 
 class Rect:
