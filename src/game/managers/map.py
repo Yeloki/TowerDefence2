@@ -4,6 +4,9 @@ from base import Vector2
 from game.game_settings import MANAGERS_SETTINGS
 from typing import Dict
 from math import atan, degrees
+from tools import get_game_maps
+from pathlib import Path
+import json
 
 
 class Map:
@@ -32,12 +35,12 @@ class Map:
             self.pos: Vector2 = pos
             width = MANAGERS_SETTINGS['map']['base']['width']
             height = MANAGERS_SETTINGS['map']['base']['height']
-            self.size: Vector2 = Vector2(width, height)
             self.hp: int = MANAGERS_SETTINGS['map']['base']['max_hp']
+            self.size: Vector2 = Vector2(width, height)
 
     def __init__(self, args: dict):
         self.__roads: Dict[int, Map.Road] = {}
-        start = args[0]
+        start = Vector2(args['map'][0]['x'], args['map'][0]['y'])
         index = 0
         for point in args['map'][1:]:
             self.__roads[index] = self.Road(start, point)
@@ -45,6 +48,7 @@ class Map:
             start = point
         self.__roads[index] = \
             self.Road(start, Vector2(args['base']['x'], args['base']['y']))
+        self.__last_road_index = index
 
     def get_road_angle(self, road_index):
         road = self.__roads[road_index]
@@ -54,8 +58,8 @@ class Map:
             return 180 if road.x_size() < 0 else 0
         tan = road.y_size() / road.x_size()
         if road.x_size() > 0:
-            return (90 + degrees(atan(tan))) % 360
-        return (-90 + degrees(atan(tan))) % 360
+            return degrees(atan(tan)) % 360
+        return (-180 + degrees(atan(tan))) % 360
 
 
 class MapManager:
@@ -67,12 +71,21 @@ class MapManager:
         logger.info('Created map manager', extra={'uid': self.__uid})
         self.__mode = self.GAME_MODE
         self.__maps: Dict[str, dict] = {}
+        self.load_maps_list()
 
     def get_map(self, name):
         Map(self.__maps[name])
 
+    def parse_map_from_list(self, filepath: Path):
+        name = filepath.name
+        file = open(filepath)
+        raw_map = json.load(file)
+        self.__maps[name] = raw_map
+
     def load_maps_list(self):
-        pass
+        files_list = get_game_maps()
+        for filepath in files_list:
+            self.parse_map_from_list(filepath)
 
     def set_mode(self, mode=GAME_MODE):
         self.__mode = mode
