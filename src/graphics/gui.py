@@ -56,10 +56,22 @@ class Button:
     def __init__(self, color=Color(0, 0, 0, 100)):
         self._color = color
         self._style = None
+        self._triggered = False
         self._pressed = False
         self._pressed_style = None
         self._text = None
         self._uid = generate_uid()
+        self.handler = None
+
+    def collide(self, mouse_pos):
+        return self.rect[0] <= mouse_pos[0] <= self.rect[2] + self.rect[0] and self.rect[1] <= mouse_pos[1] <= \
+               self.rect[3] + self.rect[1]
+
+    def event_handler(self, event):
+        pass
+
+    def set_handler(self, handler):
+        self.handler = handler
 
     def pressed(self):
         self._pressed = True
