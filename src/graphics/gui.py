@@ -54,15 +54,17 @@ class Label:
 
 class Button:
     def __init__(self, color: Color):
-        self.__color = color
-
-        self.__style = None
-        self.__pressed = False
-        self.__pressed_style = None
-        self.__text = None
-        self.__uid = generate_uid()
+        self._color = color
+        self._style = None
+        self._pressed = False
+        self._pressed_style = None
+        self._text = None
+        self._uid = generate_uid()
 
     def pressed(self):
+        self._pressed = True
+
+    def update(self):
         pass
 
 
