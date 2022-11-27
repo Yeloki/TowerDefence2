@@ -1,3 +1,14 @@
+"""
+DRAW QUEUE: (from first to last)
+map surface
+roads
+base
+enemies
+turrets
+enemies stats (hp)
+particles (explosions -> projectiles)
+GUI (bottom plate -> widgets)
+"""
 from base import Vector2
 from typing import List
 

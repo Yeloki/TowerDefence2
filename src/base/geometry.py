@@ -1,5 +1,8 @@
+from typing import Any
+
+
 class Vector2:
-    def __init__(self, x: float, y: float):
+    def __init__(self, x: Any[int, float], y: Any[int, float]):
         self.x = x
         self.y = y
 
