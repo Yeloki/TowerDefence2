@@ -8,6 +8,7 @@ class Label:
         self.__antialias = antialias
         self.__color = color
         self.__rect = rect
+        self.__uid = generate_uid()
 
 
 class Button:
