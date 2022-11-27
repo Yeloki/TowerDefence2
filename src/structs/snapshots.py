@@ -28,7 +28,7 @@ class BaseSnapshot:
 class MapSnapshot:
     size: Vector2
     base: BaseSnapshot
-    roads: RoadSnapshot
+    roads: List[RoadSnapshot]  # draw in order of indexes: 0, 1, etc.
 
 
 class EnemySnapshot:
@@ -39,7 +39,7 @@ class EnemySnapshot:
 
 class EnemiesManagerSnapshot:
     waves: int
-    enemies: List[EnemySnapshot]
+    enemies: List[EnemySnapshot]  # or maybe Dict of id -> enemyS?
 
 
 class GameSnapshot:
