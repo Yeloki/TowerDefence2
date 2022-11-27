@@ -1,7 +1,7 @@
 import pygame
 from common import *
 from base import Vector2
-
+from tools.settings import SETTINGS
 
 class Singleton(object):
     _instance = None
@@ -14,7 +14,7 @@ class Singleton(object):
 
 class Window(Singleton):
     def __init__(self, size=Vector2(0, 0),
-                 flags=pygame.OPENGL | pygame.SCALED | pygame.SHOWN | pygame.DOUBLEBUF,
+                 flags=pygame.OPENGL | pygame.SHOWN | pygame.DOUBLEBUF,
                  depth=0):
         self.__size = size
         self.__flags = flags
@@ -26,4 +26,5 @@ class Window(Singleton):
 
 
 if __name__ == "__main__":
-    a = Window(Vector2(640, 480))
+    a = Window(Vector2(SETTINGS["window"]["width"], SETTINGS["window"]["height"]))
+    input()
