@@ -3,6 +3,7 @@ from tools import logger
 from base import Vector2
 from game.game_settings import MANAGERS_SETTINGS
 from typing import Dict
+from math import atan, degrees
 
 
 class Map:
@@ -13,6 +14,18 @@ class Map:
 
         def __len__(self):
             return len(self._end - self._start)
+
+        def x_size(self):
+            return self._end.x - self._start.x
+
+        def y_size(self):
+            return self._end.y - self._start.y
+
+        def start(self):
+            return self._start
+
+        def end(self):
+            return self._end
 
     class Base:
         def __init__(self, pos: Vector2):
@@ -26,9 +39,28 @@ class Map:
         self.__roads: Dict[int, Map.Road] = {}
         start = args[0]
         index = 0
-        for point in args[1:]:
+        for point in args['map'][1:]:
             self.__roads[index] = self.Road(start, point)
+            index += 1
             start = point
+        self.__roads[index] = \
+            self.Road(start, Vector2(args['base']['x'], args['base']['y']))
+
+    def get_road_angle(self, road_index):
+        road = self.__roads[road_index]
+
+        if road.x_size() == 0:
+            return 90 if road.y_size() < 0 else 270
+
+        if road.y_size() == 0:
+            return 180 if road.x_size() < 0 else 0
+
+        tan = road.y_size() / road.x_size()
+
+        if ((road.y_size() > 0 and road.x_size() > 0) or
+                (road.y_size() < 0 and 0 < road.x_size())):
+            return (-90 + degrees(atan(tan))) % 360
+        return (90 + degrees(atan(tan))) % 360
 
 
 class MapManager:
