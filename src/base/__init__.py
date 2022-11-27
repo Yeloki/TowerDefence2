@@ -1,1 +1,1 @@
-from .geometry import Vector2, Rect
+from .geometry import *

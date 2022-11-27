@@ -1,8 +1,15 @@
+window:
+  width: 1280
+  height: 720
+  title: TowerDefence2
+  max_fps: 60
+
 project:
   name: TowerDefence2
   sources: src
   maps: maps
   logs: logs
+  font: system
 
 game:
   managers:
