@@ -1,6 +1,3 @@
-from graphics import Color
-
-
 class Vector2:
     def __init__(self, x: float, y: float):
         self.x = x
@@ -24,24 +21,21 @@ class Vector2:
 
 
 class Rect:
-    def __init__(self, color: Color, width: int, coords: Vector2, size: Vector2):
-        self._color = color
+    def __init__(self, width: int, coords: Vector2, size: Vector2):
         self._width = width
         self.corner_coords: Vector2 = coords
         self.size: Vector2 = size
 
 
 class Circle:
-    def __init__(self, color: Color, coords: Vector2, radius: float, width: int):
-        self._color = color
+    def __init__(self, coords: Vector2, radius: float, width: int):
         self._center = coords
         self._radius = radius
         self._width = width
 
 
 class Line:
-    def __init__(self, color: Color, start: Vector2, end: Vector2, width: int):
-        self._color = color
+    def __init__(self, start: Vector2, end: Vector2, width: int):
         self._start_pos = start
         self._end_pos = end
         self._width = width
