@@ -16,7 +16,7 @@ class Vector2:
         return (self.x ** 2 + self.y ** 2) ** 0.5
 
     def __str__(self):
-        return f"Vector2({self.x}, {self.y})"
+        return f'Vector2({self.x}, {self.y})'
 
     def __iter__(self):
         for i in [self.x, self.y]:
