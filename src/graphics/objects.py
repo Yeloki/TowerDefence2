@@ -1,4 +1,4 @@
-from base import Circle, Rect, Line, Text
+from base import Circle, Rect, Line
 
 import pygame
 
