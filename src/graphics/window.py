@@ -1,7 +1,6 @@
 import pygame
 from base import Vector2
 from tools import generate_uid
-from .common import Color
 from tools.settings import SETTINGS
 
 

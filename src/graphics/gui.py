@@ -1,6 +1,5 @@
 from tools import generate_uid
-from base import Rect
-from .common import Color
+from base import Rect, Vector2
 import pygame
 
 
@@ -16,21 +15,21 @@ class Label:
 
     def __search_size(self):
         w, h = self.__rect.size
-        min = 1  # replace with min_font_size
-        max = 100  # replace with max_font_size
+        low = 1  # replace with min_font_size
+        high = 100  # replace with max_font_size
         while True:
-            mid = (max + min) // 2
+            mid = (high + low) // 2
             font = pygame.font.Font(None, mid)
             wc, hc = font.render(self.__text, self.__antialias, self.__color.rgba).get_rect().get_size()
             if wc == w and hc == h:
                 self.__font_size = mid
                 break
             elif wc > w or hc > h:
-                max = mid - 1
+                high = mid - 1
             elif w > wc or h > hc:
-                min = mid + 1
+                low = mid + 1
 
-            if min > max:
+            if low > high:
                 self.__font_size = mid
                 break
 

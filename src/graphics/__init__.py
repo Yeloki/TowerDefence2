@@ -1,3 +1,2 @@
-from .common import Color
-from .objects import DrawableCircle, DrawableRect, DrawableLine
+from .objects import DrawableCircle, DrawableRect, DrawableLine, Vector2
 from .window import window

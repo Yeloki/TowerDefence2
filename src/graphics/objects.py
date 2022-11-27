@@ -1,6 +1,5 @@
-from base import Circle, Rect, Line
+from base import Circle, Rect, Line, Vector2
 import pygame
-from ..base.geometry import Vector2
 
 
 class Color:
@@ -10,7 +9,7 @@ class Color:
 
 class DrawableCircle(Circle):
 
-    def __init__(self, coords: Vector2, radius: float, width: int, color: Color):
+    def __init__(self, coords: Vector2, radius: float, width: int, color=Color(0, 0, 0, 100)):
         self.color = color
         super().__init__(coords, radius, width)
 
