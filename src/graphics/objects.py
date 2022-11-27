@@ -12,7 +12,7 @@ class DrawableCircle(Circle):
 class DrawableRect(Rect):
     def draw(self, screen):
         pygame.draw.rect(screen, self._color.rgba,
-                         pygame.Rect(self.corner_coords.x, self.corner_coords.y, self.size.x, self.size.y),
+                         pygame.Rect(*self.corner_coords, *self.size),
                          width=self._width)
 
 

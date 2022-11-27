@@ -14,7 +14,7 @@ class Singleton(object):
 
 class Window(Singleton):
     def __init__(self, size=Vector2(0, 0),
-                 flags=pygame.SHOWN | pygame.DOUBLEBUF | pygame.OPENGL,
+                 flags=pygame.SHOWN,
                  depth=0):
         self.__size = size
         self.__flags = flags
