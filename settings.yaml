@@ -3,6 +3,7 @@ project:
   sources: src
   maps: maps
   logs: logs
+  font: system
 
 game:
   managers:

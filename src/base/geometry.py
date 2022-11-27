@@ -1,3 +1,5 @@
+import pygame.draw
+
 from ..graphics.common import Color
 
 
@@ -17,17 +19,19 @@ class Vector2:
 
 
 class Rect:
-    def __init__(self, left_up: Vector2, size: Vector2):
-        self.left_up_corner: Vector2 = left_up
+    def __init__(self, color: Color, width: int, coords: Vector2, size: Vector2):
+        self.__color = color
+        self.__width = width
+        self.corner_coords: Vector2 = coords
         self.size: Vector2 = size
 
 
 class Circle:
-    def __init__(self, depth, radius, color: Color, coords):
-        self.__depth = depth
-        self.__radius = radius
+    def __init__(self, color: Color, coords: Vector2, radius: float, width: int):
         self.__color = color
-        self.__coords = coords
+        self.__center_coords = coords
+        self.__radius = radius
+        self.__width = width
 
 
 class Line:
@@ -36,3 +40,10 @@ class Line:
         self.__start_pos = start
         self.__end_pos = end
         self.__width = width
+
+
+class Text:
+    def __init__(self, text: str, antialias: bool, color: Color):
+        self.__text = text
+        self.__antialias = antialias
+        self.__color = color
