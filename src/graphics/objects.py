@@ -1,4 +1,4 @@
-from ..base import Circle, Rect, Line
+from base import Circle, Rect, Line, Text
 from ..tools import generate_uid
 import pygame
 

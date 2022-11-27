@@ -1,3 +1,5 @@
+import pygame.draw
+
 from graphics import Color
 
 
