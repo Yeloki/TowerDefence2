@@ -1,7 +1,7 @@
 from tools import generate_uid
 from tools import logger
 from base import Vector2
-from game.game_settings import MANAGERS_SETTINGS
+from game.game_settings import MAP_MANAGER_SETTINGS
 from typing import Dict
 from math import atan, degrees
 from tools import get_game_maps
@@ -33,9 +33,9 @@ class Map:
     class Base:
         def __init__(self, pos: Vector2):
             self.pos: Vector2 = pos
-            width = MANAGERS_SETTINGS['map']['base']['width']
-            height = MANAGERS_SETTINGS['map']['base']['height']
-            self.hp: int = MANAGERS_SETTINGS['map']['base']['max_hp']
+            width = MAP_MANAGER_SETTINGS['map']['base']['width']
+            height = MAP_MANAGER_SETTINGS['map']['base']['height']
+            self.hp: int = MAP_MANAGER_SETTINGS['map']['base']['max_hp']
             self.size: Vector2 = Vector2(width, height)
 
     def __init__(self, args: dict):

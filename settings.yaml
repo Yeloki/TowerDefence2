@@ -5,19 +5,40 @@ window:
   max_fps: 60
 
 project:
-  name: TowerDefence2
-  sources: src
-  maps: maps
-  logs: logs
-  font: system
+  name: TowerDefence2 # project dirname
+  sources: src # source code directory
+  maps: maps # maps directory
+  logs: logs # logs directory
+  font: system # font type
 
 game:
   managers:
-    map:
+    map: # need to recalculate map size to current window size
       field-size-x: 2000
       field-size-y: 1000
-      road-width: 25
-      base:
+      road-width: 25 # mb make it less?
+      base: # base size and hp (we rly need size here?)
         height: 150
         width: 300
-        max_hp: 10
+        max_hp: 10 # ToDo: add difficult depend
+    enemy:
+      wave-size: 10 # ToDo: add wave size depends on enemy type
+      # Maybe we need to change enemy spawn rules,
+      # for example we can add random count of enemies, but we must
+      # calculate new enemies stats (mb smth about max-hp-to-wave)
+      time-between-waves: 20 # in seconds
+      enemies: #  enemies types
+        - name: default
+          speed: 1
+          hp: 100
+          hp-mod: 0.10
+
+        - name: forced
+          speed: 0.5
+          hp: 200
+          hp-mod: 0.20
+
+        - name: fast
+          speed: 2
+          hp: 50
+          hp-mod: 0.05

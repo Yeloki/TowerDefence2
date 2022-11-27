@@ -9,7 +9,7 @@ def make_fields_better(obj):
         for row in obj:
             obj[row] = make_fields_better(obj[row])
     elif isinstance(obj, list):
-        for i in len(obj):
+        for i in range(len(obj)):
             obj[i] = make_fields_better(obj[i])
     elif isinstance(obj, str):
         if obj.isdigit():
