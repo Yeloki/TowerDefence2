@@ -48,19 +48,14 @@ class Map:
 
     def get_road_angle(self, road_index):
         road = self.__roads[road_index]
-
         if road.x_size() == 0:
-            return 90 if road.y_size() < 0 else 270
-
+            return 90 if road.y_size() > 0 else 270
         if road.y_size() == 0:
             return 180 if road.x_size() < 0 else 0
-
         tan = road.y_size() / road.x_size()
-
-        if ((road.y_size() > 0 and road.x_size() > 0) or
-                (road.y_size() < 0 and 0 < road.x_size())):
-            return (-90 + degrees(atan(tan))) % 360
-        return (90 + degrees(atan(tan))) % 360
+        if road.x_size() > 0:
+            return (90 + degrees(atan(tan))) % 360
+        return (-90 + degrees(atan(tan))) % 360
 
 
 class MapManager:
