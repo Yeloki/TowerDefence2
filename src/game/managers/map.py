@@ -39,14 +39,11 @@ class MapManager:
         self.roads = []
         self.base = None
         logger.info(f"Map created with size: {self.size_x}, {self.size_x}",
-                    # extra={'uid': self.uid}
+                    extra={'uid': self.uid}
                     )
 
     def import_map(self, _from):
         pass
 
     def export_map(self, _to):
-        pass
-
-    def snapshot(self):
         pass

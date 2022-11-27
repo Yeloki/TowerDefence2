@@ -20,3 +20,4 @@ game:
       base:
         height: 150
         width: 300
+        max_hp: 10

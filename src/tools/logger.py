@@ -23,7 +23,7 @@ LOG_CONFIG = {
     },
     "formatters": {
         "DEBUG": {
-            "format": "%(asctime)s | %(name)s | %(levelname)s | %(message)s | %(uid)s",
+            "format": "%(asctime)s | %(name)s | %(levelname)-10s | %(message)s | %(uid)s",
             "default": {"uid": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF"},
         },
 
