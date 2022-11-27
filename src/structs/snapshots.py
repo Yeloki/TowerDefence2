@@ -1,26 +1,36 @@
 from base import Vector2
+from typing import List
 
 
 class RoadSnapshot:
-    def __init__(self, start: Vector2, end: Vector2, width: int):
-        pass
+    start: Vector2
+    end: Vector2
+    width: int
 
 
 class BaseSnapshot:
-    def __init__(self, left_up: Vector2, size: Vector2, hp: int):
-        pass
+    left_up: Vector2
+    size: Vector2
+    hp: int
 
 
 class MapSnapshot:
-    def __init__(self, size: Vector2):
-        pass
+    size: Vector2
+    base: BaseSnapshot
+    roads: RoadSnapshot
 
 
 class EnemySnapshot:
-    def __init__(self, hp, pos, en_type):
-        pass
+    hp: int
+    max_hp: int
+    pos: Vector2
 
 
 class EnemiesManagerSnapshot:
-    def __init__(self, waves):
-        pass
+    waves: int
+    enemies: List[EnemySnapshot]
+
+
+class GameSnapshot:
+    map: MapSnapshot
+    enemies: EnemiesManagerSnapshot
