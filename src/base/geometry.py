@@ -1,5 +1,3 @@
-import pygame.draw
-
 from graphics import Color
 
 
@@ -24,8 +22,8 @@ class Vector2:
 
 class Rect:
     def __init__(self, color: Color, width: int, coords: Vector2, size: Vector2):
-        self.__color = color
-        self.__width = width
+        self._color = color
+        self._width = width
         self.corner_coords: Vector2 = coords
         self.size: Vector2 = size
 
@@ -45,10 +43,3 @@ class Line:
         self.__end_pos = end
         self.__width = width
 
-
-class Text:
-    def __init__(self, text: str, antialias: bool, color: Color, rect: Rect):
-        self.__text = text
-        self.__antialias = antialias
-        self.__color = color
-        self.__rect = rect
