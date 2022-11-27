@@ -29,8 +29,8 @@ def find_settings() -> Path:
             if path.is_file() and path.name == 'settings.yaml':
                 return path
         pwd = pwd.parent
-    raise RuntimeError("Cannot find settings.yaml file, "
-                       "try to run script from another directory")
+    raise RuntimeError('Cannot find settings.yaml file, '
+                       'try to run script from another directory')
 
 
 def get_base_path() -> Path:
@@ -42,9 +42,9 @@ def get_base_path() -> Path:
             if path.is_dir() and path.name == project_name:
                 return path
         pwd = pwd.parent
-    raise RuntimeError(f"Cannot find {project_name} directory,\n"
-                       "rename directory or change settings.yaml file"
-                       "and try again")
+    raise RuntimeError(f'Cannot find {project_name} directory,\n'
+                       'rename directory or change settings.yaml file'
+                       'and try again')
 
 
 def get_game_maps() -> List[Path]:

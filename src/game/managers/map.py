@@ -2,18 +2,17 @@ from tools import generate_uid
 from tools import logger
 from base import Vector2
 from game.game_settings import MANAGERS_SETTINGS
-from pathlib import Path
 from typing import Dict
 
 
 class Map:
     class Road:
         def __init__(self, start, end):
-            self.__start: Vector2 = start
-            self.__end: Vector2 = end
+            self._start: Vector2 = start
+            self._end: Vector2 = end
 
         def __len__(self):
-            return len(self.__end - self.__start)
+            return len(self._end - self._start)
 
     class Base:
         def __init__(self, pos: Vector2):
@@ -38,7 +37,7 @@ class MapManager:
 
     def __init__(self):
         self.__uid = generate_uid()
-        logger.info("Created map manager", extra={"uid": self.__uid})
+        logger.info('Created map manager', extra={'uid': self.__uid})
         self.__mode = self.GAME_MODE
         self.__maps: Dict[str, dict] = {}
 
