@@ -1,6 +1,4 @@
-from . import event_types
-from tools.logger import logger
-from tools.common import generate_uid
+from tools import generate_uid
 
 
 class Event:

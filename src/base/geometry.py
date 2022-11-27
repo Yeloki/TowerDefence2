@@ -11,3 +11,9 @@ class Vector2:
 
     def __len__(self):
         return (self.x ** 2 + self.y ** 2) ** 0.5
+
+
+class Rect:
+    def __init__(self, left_up: Vector2, size: Vector2):
+        self.left_up_corner: Vector2 = left_up
+        self.size: Vector2 = size

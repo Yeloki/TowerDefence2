@@ -9,4 +9,7 @@ game:
     map:
       field-size-x: 2000
       field-size-y: 1000
-      road-width: 30
+      road-width: 25
+      base:
+        height: 150
+        width: 300
