@@ -22,8 +22,8 @@ class Vector2:
 
 class Rect:
     def __init__(self, color: Color, width: int, coords: Vector2, size: Vector2):
-        self.__color = color
-        self.__width = width
+        self._color = color
+        self._width = width
         self.corner_coords: Vector2 = coords
         self.size: Vector2 = size
 
