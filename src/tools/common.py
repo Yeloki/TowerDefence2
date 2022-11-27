@@ -47,5 +47,12 @@ def get_base_path() -> Path:
                        "and try again")
 
 
+def get_game_maps() -> List[Path]:
+    from .settings import SETTINGS
+    maps_dir = get_base_path() / SETTINGS['project']['maps']
+    maps = get_files_from_path(maps_dir)
+    return maps
+
+
 def generate_uid() -> str:
     return token_hex(16)
