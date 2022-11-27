@@ -1,12 +1,10 @@
 from base import Circle, Rect, Line
-from graphics import Color
-from base import Vector2
 import pygame
 
 
 class DrawableCircle(Circle):
     def draw(self, screen):
-        pygame.draw.circle(screen, self._color.rgba, self._center, self._radius)
+        pygame.draw.circle(screen, self._color.rgba, tuple(self._center), self._radius)
 
 
 class DrawableRect(Rect):
@@ -19,4 +17,4 @@ class DrawableRect(Rect):
 
 class DrawableLine(Line):
     def draw(self, screen):
-        pygame.draw.circle(screen, self._color.rgba, self._start_pos, self._end_pos, width=self._width)
+        pygame.draw.line(screen, self._color.rgba, tuple(self._start_pos), tuple(self._end_pos), width=self._width)

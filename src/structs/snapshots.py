@@ -1,4 +1,4 @@
-from ..base import Vector2, Rect
+from base import Vector2
 
 
 class RoadSnapshot:
