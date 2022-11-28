@@ -116,7 +116,6 @@ class CircleButton(Button):
             self.set_style(Color(250, 10, 50, 150))
         
 
-
 class RectButton(Button):
     def __init__(self, rect: Rect, hints: str = ""):
         super().__init__(hints)
@@ -130,15 +129,97 @@ class RectButton(Button):
         self.__label = Label(self.__text, False, Color(255, 255, 255, 100), self.__rect)
 
 
+class Header:
+    def __init__(self, rect, background, exit_btn, header_label):
+        self._surface = pygame.Surface(rect.size)
+        self._background = background
+        self.set_background(background)
+        self._exit_btn = exit_btn
+        self._header_label = header_label
+        self.flag = False
+
+    def set_background(self, background):
+        if isinstance(background, Color):
+            self._surface.fill(background.rgba)
+        else:
+            # Здесь должен быть код для обработки в случае если это будет картинка
+            pass
+        self._render()
+
+    def _render(self):
+        self._exit_btn.draw(self._surface)
+        self._header_label.draw(self._surface)
+
+    def collide(self, mouse_pos):
+        x, y = self.rect.corner_coords.coord
+        w, h = self.rect.size.coord
+        return x <= mouse_pos[0] <= w + x and y <= mouse_pos[1] <= h + y
+
+    def event_handler(self, event):
+        if self.collide(event.pos):
+            if self._exit_btn.collide(event.pos):
+                return self._exit_btn.event_handler(event)
+
+            # Связанный таск со 174 строкой
+            #if event.type == pygame.MOUSEBUTTONDOWN and not self.flag:
+            #    self.flag = True
+            #elif self.flag and event.type == pygame.MOUSEMOTION:
+            #    pass
+            #
+
+    def get_flag(self):
+        return self.flag
+
+    def draw(self, screen):
+        screen.blit(self._surface, rect.corner_coords)
+
+
 class Widget:
-    def __init__(self):
-        pass
+    def __init__(self, rect: Rect, header: Header, background=None):
+        self.rect = rect
+        self._surface = pygame.Surface(rect.size)
+        self._background = None
+        self._obj_list = list()
+        self._header = header
+        self._blocked = True
 
-    def add_button(self):
-        pass
+    def add_obj(self, obj):
+        self._obj_list.append(obj)
+        self._render()
 
-    def add_label(self):
-        pass
+    def set_pos(self, pos):
+        self.rect.corner_coords = Vector2(pos[0], pos[1])
 
-    def set_background(self):
-        pass
+    def set_background(self, background):
+        if isinstance(background, Color):
+            self._surface.fill(background.rgba)
+        else:
+            # Здесь должен быть код для обработки в случае если это будет картинка
+            pass
+        self._render()
+
+    def collide(self, mouse_pos):
+        x, y = self.rect.corner_coords.coord
+        w, h = self.rect.size.coord
+        return x <= mouse_pos[0] <= w + x and y <= mouse_pos[1] <= h + y
+
+    def collide_header(self, mouse_pos):
+        return self._header.collide(mouse_pos)
+
+    def event_handler(self, event):
+        if collide(event.pos):
+            # Придумать и дописать обработку перемещения при клике на заголовок
+            if collide_header(event.pos):
+                pass
+            else:
+                for obj in self._obj_list:
+                    if isinstance(obj, Button):
+                        return obj.event_handler(event)
+
+    def _render(self):
+        for obj in self._obj_list:
+            obj.draw(self._surface)
+
+    def draw(self, screen):
+        self._render()
+        screen.blit(self._surface, self.rect.corner_coords)

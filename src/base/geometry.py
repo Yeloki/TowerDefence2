@@ -19,6 +19,9 @@ class Vector2:
         for i in [self.x, self.y]:
             yield i
 
+    def coord(self):
+        return self.x, self.y
+
 
 class Rect:
     def __init__(self, width: int, coords: Vector2, size: Vector2):
