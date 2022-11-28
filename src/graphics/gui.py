@@ -1,6 +1,6 @@
 from tools import generate_uid
 from base import Rect, Circle, Vector2
-from objects import Color, DrawableRect, DrawableCircle
+from graphics import Color, DrawableRect, DrawableCircle
 import pygame
 
 
@@ -53,12 +53,12 @@ class Label:
 
 
 class Button:
-    def __init__(self, style, pressed_style, handler=None):
-        self.__pressed = False
-        self.__style = style
-        self.__pressed_style = pressed_style
+    def __init__(self, style: [Color, type(pygame.image)], pressed_style, handler=None):
+        self._pressed = False
+        self._style = style
+        self._pressed_style = pressed_style
         self.handler = handler
-        self.__uid = generate_uid()
+        self._uid = generate_uid()
         self.flag: bool = False  # Кнопка нажата
         self.triggered: bool = False  # Мышка наведена на кнопку
 
@@ -100,25 +100,26 @@ class CircleButton(Button):
             pass
 
     def update_unpressed(self, screen):
-        if isinstance(self.__style, Color):
-            self.__circle.color = self.__style
+        if isinstance(self._style, Color):
+            self.__circle.color = self._style
             self.__circle.draw(screen)
-        elif isinstance(self.__style, type(pygame.image)):
+        elif isinstance(self._style, type(pygame.image)):
             pass
 
     def draw(self, screen):
         # Если нажата, рисуем нажатую, если нет, то нет
-        if self.__pressed:
+        if self._pressed:
             self.update_pressed(screen)
         else:
             self.update_unpressed(screen)
 
 
 class RectButton(Button):
-    def __init__(self, rect: DrawableRect, hints: str = ""):
-        super().__init__(hints)
+    def __init__(self, rect: DrawableRect, style, pressed_style, text: str = ""):
+        super().__init__(style, pressed_style)
         self.__rect = rect
         self.__label = None
+        self.__text = text
 
     def collide(self, mouse_pos):
         return self.__rect.corner_coords.x <= mouse_pos[0] <= self.__rect.corner_coords.x + self.__rect.size.x and \
@@ -127,17 +128,29 @@ class RectButton(Button):
     def set_label(self):
         self.__label = Label(self.__text, False, Color(255, 255, 255, 100), self.__rect)
 
+    def update_pressed(self, screen):
+        if isinstance(self.__pressed_style, Color):
+            self.__rect.color = self.__pressed_style
+            self.__rect.draw(screen)
+        elif isinstance(self.__pressed_style, type(pygame.image)):
+            pass
+
+    def update_unpressed(self, screen):
+        if isinstance(self.__style, Color):
+            self.__rect.color = self.__style
+            self.__rect.draw(screen)
+        elif isinstance(self.__style, type(pygame.image)):
+            pass
+
     def draw(self, screen):
         if self.__pressed:
-            self.set_style(Color(170, 170, 170, 100))
+            self.update_pressed(screen)
         else:
-            self.set_style(Color(250, 10, 50, 150))
-        self.__rect.color = self.__style
-        self.__rect.draw(screen)
+            self.update_unpressed(screen)
         self.__label.draw(screen)
 
-    def change_text(self):
-        pass
+    def change_text(self, text: str):
+        self.__text = text
 
 
 class Header:
