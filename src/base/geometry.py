@@ -27,6 +27,14 @@ class Vector2:
     def y(self):
         return self._x
 
+    @x.setter
+    def x(self, value):
+        self._x = value
+
+    @y.setter
+    def y(self, value):
+        self._y = value
+
     def move(self, dx: float, dy: float):
         self._x += dx
         self._y += dy
@@ -47,10 +55,12 @@ class Rect:
         return self._size
 
     def move(self, dx: float, dy: float):
-        pass
+        self._corner_coords.x += dx
+        self._corner_coords.y += dy
 
-    def resize(self, height, width):
-        pass
+    def resize(self, width, height):
+        self._size.x = width
+        self._size.y = height
 
 
 class Circle:
@@ -68,10 +78,11 @@ class Circle:
         return self._radius
 
     def move(self, dx: float, dy: float):
-        pass
+        self._center.x += dx
+        self._center.y += dy
 
     def resize(self, radius):
-        pass
+        self._radius = radius
 
 
 class Line:
