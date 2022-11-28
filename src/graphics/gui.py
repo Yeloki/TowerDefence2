@@ -53,16 +53,14 @@ class Label:
 
 
 class Button:
-    def __init__(self, hints: str = ""):
-        self.__text = hints
+    def __init__(self, style, pressed_style, handler=None):
         self.__pressed = False
-        self.__style = None
-        self.__pressed_style = None
+        self.__style = style
+        self.__pressed_style = pressed_style
+        self.handler = handler
         self.__uid = generate_uid()
-        self.handler = None
-        # flags of this class:
-        self.flag: bool = False
-        self.triggered: bool = False
+        self.flag: bool = False  # Кнопка нажата
+        self.triggered: bool = False  # Мышка наведена на кнопку
 
     def collide(self, mouse_pos):
         pass
@@ -81,35 +79,40 @@ class Button:
     def set_handler(self, handler):
         self.handler = handler
 
-    def set_style(self, image):
-        if isinstance(image, Color):
-            self.__style = image
-        elif isinstance(image, type(pygame.image)):
-            pass
-
-    def update(self):
+    def draw(self, screen):
         pass
-
-    def change_text(self, text: str):
-        self.__text = text
 
 
 class CircleButton(Button):
-    def __init__(self, circle: DrawableCircle, hints: str = ""):
-        super().__init__(hints)
+    def __init__(self, circle: DrawableCircle, style, pressed_style):
+        super().__init__(style, pressed_style)
         self.__circle = circle
 
     def collide(self, mouse_pos):
         return (mouse_pos[0] - self.__circle.center.x) ** 2 + (
                 mouse_pos[1] - self.__circle.center.y) ** 2 <= self.__circle.radius
 
+    def update_pressed(self, screen):
+        if isinstance(self.__pressed_style, Color):
+            self.__circle.color = self.__pressed_style
+            self.__circle.draw(screen)
+        elif isinstance(self.__pressed_style, type(pygame.image)):
+            pass
+
+    def update_unpressed(self, screen):
+        if isinstance(self.__style, Color):
+            self.__circle.color = self.__style
+            self.__circle.draw(screen)
+        elif isinstance(self.__style, type(pygame.image)):
+            pass
+
     def draw(self, screen):
+        # Если нажата, рисуем нажатую, если нет, то нет
         if self.__pressed:
-            self.set_style(Color(170, 170, 170, 100))
+            self.update_pressed(screen)
         else:
-            self.set_style(Color(250, 10, 50, 150))
-        self.__circle.color = self.__style
-        self.__circle.draw(screen)
+            self.update_unpressed(screen)
+
 
 class RectButton(Button):
     def __init__(self, rect: DrawableRect, hints: str = ""):
@@ -132,6 +135,9 @@ class RectButton(Button):
         self.__rect.color = self.__style
         self.__rect.draw(screen)
         self.__label.draw(screen)
+
+    def change_text(self):
+        pass
 
 
 class Header:
@@ -166,9 +172,9 @@ class Header:
                 return self._exit_btn.event_handler(event)
 
             # Связанный таск со 174 строкой
-            #if event.type == pygame.MOUSEBUTTONDOWN and not self.flag:
+            # if event.type == pygame.MOUSEBUTTONDOWN and not self.flag:
             #    self.flag = True
-            #elif self.flag and event.type == pygame.MOUSEMOTION:
+            # elif self.flag and event.type == pygame.MOUSEMOTION:
             #    pass
             #
 
