@@ -24,7 +24,7 @@ class DrawableCircle(Circle):
         self.color = color
 
     def draw(self, screen):
-        pygame.draw.circle(screen, self.color.rgba, *self._center, self._radius)
+        pygame.draw.circle(screen, self.color.rgba, tuple(self._center), self._radius)
 
 
 class DrawableRect(Rect):
@@ -37,7 +37,7 @@ class DrawableRect(Rect):
 
     def draw(self, screen):
         pygame.draw.rect(screen, self.color.rgba,
-                         pygame.Rect(*self.corner_coords, *self.size),
+                         pygame.Rect(tuple(self.corner_coords), tuple(self._size)),
                          width=self._width)
 
 
@@ -52,6 +52,6 @@ class DrawableLine(Line):
     def draw(self, screen):
         pygame.draw.line(screen,
                          self.color.rgba,
-                         *self._start_pos,
-                         *self._end_pos,
+                         tuple(self._start_pos),
+                         tuple(self._end_pos),
                          width=self._width)
