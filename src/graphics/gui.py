@@ -1,6 +1,6 @@
 from tools import generate_uid
 from base import Rect, Circle, Vector2
-from objects import Color
+from objects import Color, DrawableRect, DrawableCircle
 import pygame
 
 
@@ -87,12 +87,6 @@ class Button:
         elif isinstance(image, type(pygame.image)):
             pass
 
-    def set_pressedstyle(self, image):
-        if isinstance(image, Color):
-            self.__pressed_style = image
-        elif isinstance(image, type(pygame.image)):
-            pass
-
     def update(self):
         pass
 
@@ -101,7 +95,7 @@ class Button:
 
 
 class CircleButton(Button):
-    def __init__(self, circle: Circle, hints: str = ""):
+    def __init__(self, circle: DrawableCircle, hints: str = ""):
         super().__init__(hints)
         self.__circle = circle
 
@@ -109,17 +103,19 @@ class CircleButton(Button):
         return (mouse_pos[0] - self.__circle.center.x) ** 2 + (
                 mouse_pos[1] - self.__circle.center.y) ** 2 <= self.__circle.radius
 
-    def update(self):
+    def draw(self, screen):
         if self.__pressed:
-            self.set_pressedstyle(Color(170, 170, 170, 100))
+            self.set_style(Color(170, 170, 170, 100))
         else:
             self.set_style(Color(250, 10, 50, 150))
-        
+        self.__circle.color = self.__style
+        self.__circle.draw(screen)
 
 class RectButton(Button):
-    def __init__(self, rect: Rect, hints: str = ""):
+    def __init__(self, rect: DrawableRect, hints: str = ""):
         super().__init__(hints)
         self.__rect = rect
+        self.__label = None
 
     def collide(self, mouse_pos):
         return self.__rect.corner_coords.x <= mouse_pos[0] <= self.__rect.corner_coords.x + self.__rect.size.x and \
@@ -127,6 +123,15 @@ class RectButton(Button):
 
     def set_label(self):
         self.__label = Label(self.__text, False, Color(255, 255, 255, 100), self.__rect)
+
+    def draw(self, screen):
+        if self.__pressed:
+            self.set_style(Color(170, 170, 170, 100))
+        else:
+            self.set_style(Color(250, 10, 50, 150))
+        self.__rect.color = self.__style
+        self.__rect.draw(screen)
+        self.__label.draw(screen)
 
 
 class Header:
