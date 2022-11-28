@@ -29,8 +29,8 @@ class Rect:
 
 class Circle:
     def __init__(self, coords: Vector2, radius: float, width: int):
-        self._center = coords
-        self._radius = radius
+        self.center = coords
+        self.radius = radius
         self._width = width
 
 

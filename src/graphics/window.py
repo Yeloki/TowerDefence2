@@ -1,5 +1,6 @@
 import pygame
 from base import Vector2
+from graphics import Color
 from tools import generate_uid
 from tools.settings import SETTINGS
 

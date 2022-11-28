@@ -1,5 +1,5 @@
 from tools import generate_uid
-from base import Rect, Vector2
+from base import Rect, Circle, Vector2
 from objects import Color
 import pygame
 
@@ -53,45 +53,81 @@ class Label:
 
 
 class Button:
-    def __init__(self, color: Color, coords: Vector2, size: Vector2, hints: str = ""):
-        self.__color = color
-        self.__pos = coords
-        self.__hints = Label(hints, False, Color(0, 0, 0), Rect(2, coords, size))
-        self.__size = size
-
-        self.__style = None
+    def __init__(self, hints: str = ""):
+        self.__text = hints
         self.__pressed = False
+        self.__style = None
         self.__pressed_style = None
         self.__uid = generate_uid()
-    def event_handler(self, event):
+        self.handler = None
+        # flags of this class:
+        self.flag: bool = False
+        self.triggered: bool = False
+
+    def collide(self, mouse_pos):
         pass
+
+    def event_handler(self, event):
+        if event.type == pygame.MOUSEMOTION:
+            self.triggered = self.collide(event.pos)
+        if event.type == pygame.MOUSEBUTTONUP and self.flag:
+            self.flag = False
+            if self.collide(event.pos):
+                self.__pressed = True
+                return self.handler
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            self.flag = True
 
     def set_handler(self, handler):
         self.handler = handler
 
-    def pressed(self):
-        self._pressed = True
+    def set_style(self, image):
+        if isinstance(image, Color):
+            self.__style = image
+        elif isinstance(image, type(pygame.image)):
+            pass
+
+    def set_pressedstyle(self, image):
+        if isinstance(image, Color):
+            self.__pressed_style = image
+        elif isinstance(image, type(pygame.image)):
+            pass
 
     def update(self):
         pass
 
     def change_text(self, text: str):
-        self.__hints.set_label(text)
-
-    def pointing(self):
-        self.__color = Color(50, 50, 50, 150)
+        self.__text = text
 
 
 class CircleButton(Button):
-    def __init__(self, circle: Circle, color=Color(0, 0, 0, 100)):
-        super().__init__(color=color)
-        self.circle = circle
+    def __init__(self, circle: Circle, hints: str = ""):
+        super().__init__(hints)
+        self.__circle = circle
+
+    def collide(self, mouse_pos):
+        return (mouse_pos[0] - self.__circle.center.x) ** 2 + (
+                mouse_pos[1] - self.__circle.center.y) ** 2 <= self.__circle.radius
+
+    def update(self):
+        if self.__pressed:
+            self.set_pressedstyle(Color(170, 170, 170, 100))
+        else:
+            self.set_style(Color(250, 10, 50, 150))
+        
 
 
 class RectButton(Button):
-    def __init__(self, rect: rect, color=Color(0, 0, 0, 100)):
-        super().__init__(color=color)
-        self.rect = rect
+    def __init__(self, rect: Rect, hints: str = ""):
+        super().__init__(hints)
+        self.__rect = rect
+
+    def collide(self, mouse_pos):
+        return self.__rect.corner_coords.x <= mouse_pos[0] <= self.__rect.corner_coords.x + self.__rect.size.x and \
+               self.__rect.corner_coords.y <= mouse_pos[1] <= self.__rect.corner_coords.y + self.__rect.size.y
+
+    def set_label(self):
+        self.__label = Label(self.__text, False, Color(255, 255, 255, 100), self.__rect)
 
 
 class Widget:
