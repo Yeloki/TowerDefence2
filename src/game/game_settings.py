@@ -1,3 +1,4 @@
 from tools.settings import SETTINGS
 
-MANAGERS_SETTINGS = SETTINGS['game']['managers']
+MAP_MANAGER_SETTINGS = SETTINGS['game']['managers']['map']
+ENEMY_MANAGER_SETTINGS = SETTINGS['game']['managers']['enemy']
