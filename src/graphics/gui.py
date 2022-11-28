@@ -1,5 +1,5 @@
 from tools import generate_uid
-from base import Rect
+from base import Rect, Vector2
 from .common import Color
 import pygame
 
@@ -53,17 +53,25 @@ class Label:
 
 
 class Button:
-    def __init__(self, color: Color):
+    def __init__(self, color: Color, coords: Vector2, size: Vector2, hints: str = ""):
         self.__color = color
+        self.__pos = coords
+        self.__hints = Label(hints, False, Color(0, 0, 0), Rect(2, coords, size))
+        self.__size = size
 
         self.__style = None
         self.__pressed = False
         self.__pressed_style = None
-        self.__text = None
         self.__uid = generate_uid()
 
     def pressed(self):
         pass
+
+    def change_text(self, text: str):
+        self.__hints.set_label(text)
+
+    def pointing(self):
+        self.__color = Color(50, 50, 50, 150)
 
 
 class CircleButton(Button):
