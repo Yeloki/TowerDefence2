@@ -27,6 +27,7 @@ game:
       # for example we can add random count of enemies, but we must
       # calculate new enemies stats (mb smth about max-hp-to-wave)
       time-between-waves: 20 # in seconds
+      time-between-enemies: 1 # in seconds
       enemies: #  enemies types
         # colors used only on alpha versions of builds
         - name: default

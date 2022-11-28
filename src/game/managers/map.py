@@ -14,6 +14,7 @@ class Map:
         def __init__(self, start, end):
             self._start: Vector2 = start
             self._end: Vector2 = end
+            self.__angle = self.__calculate_angle()
 
         def __len__(self):
             return len(self._end - self._start)
@@ -29,6 +30,19 @@ class Map:
 
         def end(self):
             return self._end
+
+        def __calculate_angle(self):
+            if self.x_size() == 0:
+                return 90 if self.y_size() > 0 else 270
+            if self.y_size() == 0:
+                return 180 if self.x_size() < 0 else 0
+            tan = self.y_size() / self.x_size()
+            if self.x_size() > 0:
+                return degrees(atan(tan)) % 360
+            return (-180 + degrees(atan(tan))) % 360
+
+        def get_angle(self):
+            return self.__angle
 
     class Base:
         def __init__(self, pos: Vector2):
@@ -52,14 +66,6 @@ class Map:
 
     def get_road_angle(self, road_index):
         road = self.__roads[road_index]
-        if road.x_size() == 0:
-            return 90 if road.y_size() > 0 else 270
-        if road.y_size() == 0:
-            return 180 if road.x_size() < 0 else 0
-        tan = road.y_size() / road.x_size()
-        if road.x_size() > 0:
-            return degrees(atan(tan)) % 360
-        return (-180 + degrees(atan(tan))) % 360
 
 
 class MapManager:
