@@ -53,20 +53,16 @@ class Label:
 
 
 class Button:
-    def __init__(self, color=Color(0, 0, 0, 100)):
-        self._color = color
-        self._style = None
-        self._triggered = False
-        self._pressed = False
-        self._pressed_style = None
-        self._text = None
-        self._uid = generate_uid()
-        self.handler = None
+    def __init__(self, color: Color, coords: Vector2, size: Vector2, hints: str = ""):
+        self.__color = color
+        self.__pos = coords
+        self.__hints = Label(hints, False, Color(0, 0, 0), Rect(2, coords, size))
+        self.__size = size
 
-    def collide(self, mouse_pos):
-        return self.rect[0] <= mouse_pos[0] <= self.rect[2] + self.rect[0] and self.rect[1] <= mouse_pos[1] <= \
-               self.rect[3] + self.rect[1]
-
+        self.__style = None
+        self.__pressed = False
+        self.__pressed_style = None
+        self.__uid = generate_uid()
     def event_handler(self, event):
         pass
 
@@ -78,6 +74,12 @@ class Button:
 
     def update(self):
         pass
+
+    def change_text(self, text: str):
+        self.__hints.set_label(text)
+
+    def pointing(self):
+        self.__color = Color(50, 50, 50, 150)
 
 
 class CircleButton(Button):
