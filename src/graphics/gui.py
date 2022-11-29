@@ -4,6 +4,9 @@ from graphics import Color, DrawableRect, DrawableCircle
 import pygame
 
 
+# TODO: обработать наведение мыши на кнопку (уменьшить alpha на 150 от исходного).
+# TODO: Обработать отжатие мыши - возвращение кнопки к исходному состояниюВ
+
 class Label:
     def __init__(self, text: str, antialias: bool, color: Color, rect: Rect):
         self.__text = text
@@ -200,8 +203,9 @@ class Header:
     def get_flag(self):
         return self.flag
 
+    # TODO: тут был параметр rect.coords. Переделай, чтоб работало.
     def draw(self, screen):
-        screen.blit(self._surface, rect.corner_coords)
+        screen.blit(self._surface)
 
 
 class Widget:
@@ -217,8 +221,10 @@ class Widget:
         self._obj_list.append(obj)
         self._render()
 
+    # TODO: Я подумаю насчёт сеттера для всего вектора. Можно переопределить метод move, НАВЕРНОЕ..........
     def set_pos(self, pos):
-        self.rect.corner_coords = Vector2(pos[0], pos[1])
+        self.rect.corner_coords.x = pos[0]
+        self.rect.corner_coords.y = pos[1]
 
     def set_background(self, background):
         if isinstance(background, Color):
@@ -237,9 +243,9 @@ class Widget:
         return self._header.collide(mouse_pos)
 
     def event_handler(self, event):
-        if collide(event.pos):
+        if self.collide(event.pos):
             # Придумать и дописать обработку перемещения при клике на заголовок
-            if collide_header(event.pos):
+            if self.collide_header(event.pos):
                 pass
             else:
                 for obj in self._obj_list:
