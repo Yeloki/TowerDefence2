@@ -26,7 +26,7 @@ class Color:
         if 0 <= value <= 255:
             self._r = value
         else:
-            raise ColorValueError("Color should be from 0 to 255")
+            raise ColorValueError()
 
     @property
     def g(self):
@@ -37,7 +37,7 @@ class Color:
         if 0 <= value <= 255:
             self._g = value
         else:
-            raise ColorValueError("Color should be from 0 to 255")
+            raise ColorValueError()
 
     @property
     def b(self):
@@ -48,7 +48,7 @@ class Color:
         if 0 <= value <= 255:
             self._b = value
         else:
-            raise ColorValueError("Color should be from 0 to 255")
+            raise ColorValueError()
 
     @property
     def a(self):
@@ -59,7 +59,7 @@ class Color:
         if 0 <= value <= 255:
             self._a = value
         else:
-            raise ColorValueError("Color should be from 0 to 255")
+            raise ColorValueError()
 
     def rgba(self) -> tuple:
         return int(self._r), int(self._g), int(self._b), int(self._a)

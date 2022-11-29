@@ -53,12 +53,14 @@ class Label:
 
 
 class Button:
-    def __init__(self, style: [Color, type(pygame.image)], pressed_style, handler=None):
-        self._pressed = False
+    def __init__(self, style: [Color, type(pygame.image)],
+                 pressed_style: [Color, type(pygame.image)],
+                 handler=None):
         self._style = style
         self._pressed_style = pressed_style
         self.handler = handler
         self._uid = generate_uid()
+        self._pressed = False
         self.flag: bool = False  # Кнопка нажата
         self.triggered: bool = False  # Мышка наведена на кнопку
 
@@ -86,7 +88,9 @@ class Button:
 
 
 class CircleButton(Button):
-    def __init__(self, circle: DrawableCircle, style, pressed_style):
+    def __init__(self, circle: DrawableCircle,
+                 style: [Color, type(pygame.image)],
+                 pressed_style):
         super().__init__(style, pressed_style)
         self._circle = circle
 

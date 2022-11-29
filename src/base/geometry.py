@@ -1,3 +1,6 @@
+from .exceptions import SizeValueError
+
+
 class Vector2:
     def __init__(self, x: float, y: float):
         self._x = x
@@ -59,6 +62,8 @@ class Rect:
         self._corner_coords.y += dy
 
     def resize(self, width, height):
+        if width < 0 or height < 0:
+            raise SizeValueError()
         self._size.x = width
         self._size.y = height
 
@@ -82,6 +87,8 @@ class Circle:
         self._center.y += dy
 
     def resize(self, radius):
+        if radius < 0:
+            raise SizeValueError()
         self._radius = radius
 
 
