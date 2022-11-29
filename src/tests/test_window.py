@@ -3,8 +3,8 @@ from graphics import Window, DrawableRect, Color, CircleButton, DrawableCircle
 from base import Vector2
 
 window = Window()
-cir = DrawableCircle(Vector2(15, 20), 40, 1, Color(255, 255, 255, 150))
-but = CircleButton(cir, Color(255, 255, 255, 150), Color(100, 5, 25, 150))
+cir = DrawableCircle(Vector2(100, 50), 40, 1, Color(255, 255, 255, 150))
+but = CircleButton(cir, Color(255, 255, 255, 150), Color(5, 5, 25, 150))
 
 while True:
     window.fill(Color(0, 0, 0, 255))
@@ -14,5 +14,6 @@ while True:
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_F4 and event.mod in (512, 256):
                 exit()
+        but.event_handler(event)
     window.blit(but)
     window.display()

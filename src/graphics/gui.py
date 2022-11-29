@@ -68,13 +68,15 @@ class Button:
     def event_handler(self, event):
         if event.type == pygame.MOUSEMOTION:
             self.triggered = self.collide(event.pos)
-        if event.type == pygame.MOUSEBUTTONUP and self.flag:
+        elif event.type == pygame.MOUSEBUTTONUP and self.flag:
             self.flag = False
             if self.collide(event.pos):
-                self.__pressed = True
+                self._pressed = True
                 return self.handler
-        if event.type == pygame.MOUSEBUTTONDOWN:
+        elif event.type == pygame.MOUSEBUTTONDOWN:
             self.flag = True
+        else:
+            pass
 
     def set_handler(self, handler):
         self.handler = handler
@@ -86,23 +88,23 @@ class Button:
 class CircleButton(Button):
     def __init__(self, circle: DrawableCircle, style, pressed_style):
         super().__init__(style, pressed_style)
-        self.__circle = circle
+        self._circle = circle
 
     def collide(self, mouse_pos):
-        return (mouse_pos[0] - self.__circle.center.x) ** 2 + (
-                mouse_pos[1] - self.__circle.center.y) ** 2 <= self.__circle.radius
+        return (mouse_pos[0] - self._circle.center.x) ** 2 + (
+                mouse_pos[1] - self._circle.center.y) ** 2 <= self._circle.radius
 
     def update_pressed(self, screen):
-        if isinstance(self.__pressed_style, Color):
-            self.__circle.color = self.__pressed_style
-            self.__circle.draw(screen)
-        elif isinstance(self.__pressed_style, type(pygame.image)):
+        if isinstance(self._pressed_style, Color):
+            self._circle.set_color(self._pressed_style)
+            self._circle.draw(screen)
+        elif isinstance(self._pressed_style, type(pygame.image)):
             pass
 
     def update_unpressed(self, screen):
         if isinstance(self._style, Color):
-            self.__circle.color = self._style
-            self.__circle.draw(screen)
+            self._circle.color = self._style
+            self._circle.draw(screen)
         elif isinstance(self._style, type(pygame.image)):
             pass
 

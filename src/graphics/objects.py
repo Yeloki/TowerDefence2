@@ -1,4 +1,5 @@
 from base import Circle, Rect, Line, Vector2
+from .exceptions import ColorValueError
 import pygame
 
 
@@ -11,7 +12,57 @@ class Color:
         :param b: blue shade
         :param a: brightness
         """
-        self.rgba = (int(r), int(g), int(b), int(a))
+        self._r = r
+        self._g = g
+        self._b = b
+        self._a = a
+
+    @property
+    def r(self):
+        return self._r
+
+    @r.setter
+    def r(self, value):
+        if 0 <= value <= 255:
+            self._r = value
+        else:
+            raise ColorValueError("Color should be from 0 to 255")
+
+    @property
+    def g(self):
+        return self._g
+
+    @g.setter
+    def g(self, value):
+        if 0 <= value <= 255:
+            self._g = value
+        else:
+            raise ColorValueError("Color should be from 0 to 255")
+
+    @property
+    def b(self):
+        return self._b
+
+    @b.setter
+    def b(self, value):
+        if 0 <= value <= 255:
+            self._b = value
+        else:
+            raise ColorValueError("Color should be from 0 to 255")
+
+    @property
+    def a(self):
+        return self._a
+
+    @a.setter
+    def a(self, value):
+        if 0 <= value <= 255:
+            self._a = value
+        else:
+            raise ColorValueError("Color should be from 0 to 255")
+
+    def rgba(self) -> tuple:
+        return int(self._r), int(self._g), int(self._b), int(self._a)
 
 
 class DrawableCircle(Circle):
