@@ -26,10 +26,10 @@ def find_settings() -> Path:
     pwd = Path(os.path.abspath(os.path.curdir))
     while pwd != pwd.parent:
         for path in pwd.iterdir():
-            if path.is_file() and path.name == 'settings.yaml':
+            if path.is_file() and path.name == 'config.yaml':
                 return path
         pwd = pwd.parent
-    raise RuntimeError('Cannot find settings.yaml file, '
+    raise RuntimeError('Cannot find config.yaml file, '
                        'try to run script from another directory')
 
 
@@ -43,7 +43,7 @@ def get_base_path() -> Path:
                 return path
         pwd = pwd.parent
     raise RuntimeError(f'Cannot find {project_name} directory,\n'
-                       'rename directory or change settings.yaml file'
+                       'rename directory or change config.yaml file'
                        'and try again')
 
 

@@ -35,11 +35,27 @@ class EnemySnapshot:
     hp: int
     max_hp: int
     pos: Vector2
+    angle: float
+
+    def __init__(self, max_hp, hp, pos, angle):
+        self.max_hp = max_hp
+        self.hp = hp
+        self.pos = pos
+        self.angle = angle
 
 
 class EnemiesManagerSnapshot:
     waves: int
-    enemies: List[EnemySnapshot]  # or maybe Dict of id -> enemyS?
+    time_before_next_wave: int
+    enemies: List[EnemySnapshot]  # or maybe Dict of id -> enemy?
+
+
+class StatSnapshot:
+    name: str
+    value: int
+    mult: int
+    max: int
+    cost: int
 
 
 class GameSnapshot:

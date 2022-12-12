@@ -1,6 +1,6 @@
 import logging
 import logging.config
-from .common import get_base_path
+from .common import get_base_path, generate_uid
 from .settings import SETTINGS
 
 LOG_CONFIG = {
@@ -23,7 +23,7 @@ LOG_CONFIG = {
     },
     'formatters': {
         'DEBUG': {
-            'format': '%(asctime)s | %(name)s | %(levelname)-10s | %(uid)s | %(message)s',
+            'format': f'{generate_uid()} | %(asctime)s | %(name)s | %(levelname)-10s | %(uid)s | %(message)s',
             'default': {'uid': 'FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF'},
         },
 

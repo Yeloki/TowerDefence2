@@ -1,24 +1,29 @@
-import multiprocessing
 from random import randint
 from multiprocessing import Process, Manager, Lock
 from multiprocessing.managers import SyncManager
 from multiprocessing.sharedctypes import Value
 from game.game_settings import ENEMY_MANAGER_SETTINGS
+from structs.snapshots import EnemiesManagerSnapshot, EnemySnapshot
 from tools import logger, generate_uid
+from base import Vector2
 from time import time as now
 
 
 class Enemy:
     def __init__(self, hp, speed, enemy_type):
+        self.__max_hp = hp
         self.__hp = hp
         self.__road_index = 0
         self.__enemy_type = enemy_type
-        # self.__pos = ...
-        # self.__angle = ...
+        self.__pos = ...
+        self.__angle = ...
         self.__speed = speed
 
     def move(self):
         pass
+
+    def snapshot(self):
+        return EnemySnapshot(self.__max_hp, self.__hp, self.__pos, self.__angle)
 
     def next_road(self):
         pass
@@ -56,26 +61,34 @@ def _enemy_queue(uid,
             lock.release()
             enemy = Manager().Enemy(enemy_hp, enemy_speed, enemy_type)
             enemies_map[_id] = enemy
-
             count -= 1
-            logger.info('enemy spawned',
-                        extra={'uid': uid})
+            logger.info('enemy spawned', extra={'uid': uid})
             __time_of_last_spawn = now()
     logger.info(f'Wave of {enemy_type} was ended',
                 extra={'uid': uid})
 
 
-class EnemiesManager:
+class EnemiesManagerMeta(type):
+    _instance = None
+
+    def __call__(cls, *args, **kwargs):
+        if cls._instance is None:
+            cls._instance = super().__call__(*args, **kwargs)
+        return cls._instance
+
+
+class EnemiesManager(metaclass=EnemiesManagerMeta):
     def __init__(self):
         self.__lock = Manager().Lock()
         self.__enemy_id = Value('i', 0)
-        self.__waves_count = 1
+        self.__waves_count = 0
         self.__manager = Manager()
         self.__enemies = self.__manager.dict()
         self.__wave_size = ENEMY_MANAGER_SETTINGS['wave-size']
         self.__enemies_type = ENEMY_MANAGER_SETTINGS['enemies']
         self.__time_of_last_wave = now()
         self.__time_between_spawn = ENEMY_MANAGER_SETTINGS['time-between-enemies']
+        self.__time_between_waves = ENEMY_MANAGER_SETTINGS['time-between-waves']
         self.__enemy_queues = {}
 
     def __next_wave(self, enemy_type_index):
@@ -94,16 +107,41 @@ class EnemiesManager:
         self.__enemy_queues[uid] = p
         self.__waves_count += 1
 
+    def __erase_done_processes(self):
+        for key in self.__enemy_queues.keys():
+            if not self.__enemy_queues[key].is_alive():
+                del self.__enemy_queues[key]
+
     def call_next_wave(self):
+        self.__erase_done_processes()
         curr_type = randint(0, len(self.__enemies_type) - 1)
         self.__next_wave(curr_type)
 
-    def update(self, events):
-        pass
+    def update(self):
+        if now() - self.__time_of_last_wave > self.__time_between_waves:
+            self.call_next_wave()
+            self.__time_of_last_wave = now()
+
+    def snapshot(self):
+        snapshot = EnemiesManagerSnapshot()
+        snapshot.waves = self.__waves_count
+        snapshot.time_before_next_wave = self.__time_of_last_wave - self.__time_between_waves
+        snapshot.enemies = []
+        for enemy in self.__enemies:
+            snapshot.enemies.append(enemy.snapshot())
+        return snapshot
 
     def reset(self):
         for uid, process in self.__enemy_queues.items():
             if process.is_alive():
                 process.kill()
                 logger.info('Successfully killed enemy queue', extra={'uid': uid})
-        print(self.__enemies)
+        self.__enemies.clear()
+        self.__enemy_queues.clear()
+        self.__enemy_id.value = 0
+        self.__waves_count = 1
+        try:
+            self.__lock.release()
+        except RuntimeError:
+            pass
+        self.__time_of_last_wave = now()
