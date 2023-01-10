@@ -1,7 +1,7 @@
-from tools import generate_uid
+from tools import generate_uuid
 from tools import logger
 from base import Vector2
-from game.game_settings import MAP_MANAGER_SETTINGS
+from tools import MAP_MANAGER_SETTINGS
 from typing import Dict
 from math import atan, degrees
 from tools import get_game_maps
@@ -73,8 +73,8 @@ class MapManager:
     EDITOR_MODE = 1
 
     def __init__(self):
-        self.__uid = generate_uid()
-        logger.info('Created map manager', extra={'uid': self.__uid})
+        self.__uuid = generate_uuid()
+        logger.info('Created map manager', extra={'uuid': self.__uuid})
         self.__mode = self.GAME_MODE
         self.__maps: Dict[str, dict] = {}
         self.load_maps_list()

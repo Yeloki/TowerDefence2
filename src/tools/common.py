@@ -54,5 +54,5 @@ def get_game_maps() -> List[Path]:
     return maps
 
 
-def generate_uid() -> str:
+def generate_uuid() -> str:
     return token_hex(16)

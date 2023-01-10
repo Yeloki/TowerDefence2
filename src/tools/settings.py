@@ -26,3 +26,8 @@ settings_path = find_settings()
 settings_file = open(settings_path, mode='r')
 SETTINGS = make_fields_better(yaml.load(settings_file, yaml.BaseLoader))
 settings_file.close()
+
+
+MAP_MANAGER_SETTINGS = SETTINGS['game']['managers']['map']
+ENEMY_MANAGER_SETTINGS = SETTINGS['game']['managers']['enemy']
+TURRETS_MANAGER_SETTINGS = SETTINGS['game']['managers']['turret']

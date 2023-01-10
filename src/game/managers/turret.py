@@ -1,4 +1,4 @@
-from game.game_settings import TURRETS_MANAGER_SETTINGS as CONFIG
+from tools import TURRETS_MANAGER_SETTINGS as CONFIG
 from base.geometry import Vector2
 from typing import Dict
 
@@ -44,9 +44,9 @@ class GunnerTurret:
     def __init__(self, pos):
         self.__pos = pos
         __config = CONFIG['turrets']['gunner']
-        self.__damage = Damage(CONFIG['damage'])
-        self.__rate = Damage(CONFIG['rate'])
-        self.__range = Damage(CONFIG['range'])
+        self.__damage = Damage(__config['damage'])
+        self.__rate = Rate(__config['rate'])
+        self.__range = Range(__config['range'])
         self.__enemy = None
 
     def find_enemy(self):
@@ -78,4 +78,7 @@ class TurretsManager(metaclass=TurretsManagerMeta):
         pass
 
     def get_turret_stats_by_name(self):
+        pass
+
+    def update(self):
         pass

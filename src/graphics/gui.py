@@ -1,4 +1,4 @@
-from tools import generate_uid
+from tools import generate_uuid
 from base import Rect
 from .common import Color
 import pygame
@@ -60,7 +60,7 @@ class Button:
         self.__pressed = False
         self.__pressed_style = None
         self.__text = None
-        self.__uid = generate_uid()
+        self.__uuid = generate_uuid()
 
     def pressed(self):
         pass

@@ -8,6 +8,6 @@ if __name__ == '__main__':
     start = now()
     EnemiesManager().call_next_wave()
     EnemiesManager().call_next_wave()
-    while now() - start < 10:
-        pass
+    while now() - start < 30:
+        EnemiesManager().update()
     EnemiesManager().reset()
