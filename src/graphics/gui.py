@@ -1,11 +1,15 @@
-from tools import generate_uuid
-from base import Rect
-from .common import Color
 import pygame
+
+from base import Rect
+from tools import generate_uuid, logger
+from .common import Color
+from .window import Window
 
 
 class Label:
     def __init__(self, text: str, antialias: bool, color: Color, rect: Rect):
+        self.__uuid = generate_uuid()
+
         self.__text = text
         self.__antialias = antialias
         self.__color = color
@@ -16,23 +20,23 @@ class Label:
 
     def __search_size(self):
         w, h = self.__rect.size
-        min = 1  # replace with min_font_size
-        max = 100  # replace with max_font_size
+        mn = 1  # replace with min_font_size
+        mx = 100  # replace with max_font_size
         while True:
-            mid = (max + min) // 2
+            mid = (mx + mn) // 2
             font = pygame.font.Font(None, mid)
             wc, hc = font.render(self.__text, self.__antialias, self.__color.rgba).get_rect().get_size()
             if wc == w and hc == h:
                 self.__font_size = mid
                 break
             elif wc > w or hc > h:
-                max = mid - 1
+                mx = mid - 1
             elif w > wc or h > hc:
-                min = mid + 1
-
-            if min > max:
+                mn = mid + 1
+            if mn > mx:
                 self.__font_size = mid
                 break
+        logger.info(f'Setting up font size {str(self.__font_size)} for label', extra={"uuid": self.__uuid})
 
     def __render(self):
         self.__search_size()
@@ -52,9 +56,35 @@ class Label:
         self.__render()
 
 
+class ButtonStyle:
+    def __init__(self, style_params):
+        self.__uuid = generate_uuid()
+        self.__current = 'common'
+        self.__type = style_params['type']
+        if self.__type == 'color':
+            self.__common = Color(*map(int, style_params['common'].split()))
+            self.__hover = Color(*map(int, style_params['hover'].split()))
+            self.__clicked = Color(*map(int, style_params['clicked'].split()))
+            logger.info('Button style created', extra={'uuid': self.__uuid})
+        else:
+            logger.error("Unknown style type", extra={'uuid': self.__uuid})
+            pass  # feature request: add buttons from image supporting
+
+    def get_style(self):
+        if self.__current == 'common':
+            return self.__type, self.__common
+        elif self.__current == 'hover':
+            return self.__type, self.__hover
+        elif self.__current == 'clicked':
+            return self.__type, self.__clicked
+        logger.error(f'Unknown button style type {str(self.__type)}', extra={"uuid": self.__uuid})
+        raise RuntimeError("ButtonStyle internal error")
+
+
 class Button:
-    def __init__(self, color: Color):
-        self.__color = color
+    def __init__(self, button_settings):
+        self.__uuid = generate_uuid()
+        self.__id = None
 
         self.__style = None
         self.__pressed = False
@@ -85,4 +115,28 @@ class Widget:
         pass
 
     def set_background(self):
+        pass
+
+
+class Screen:
+    def __init__(self, path):
+        self.__uuid = generate_uuid()
+        pass
+
+
+class InterfaceManagerMeta(type):
+    _instance = None
+
+    def __call__(cls, *args, **kwargs):
+        if cls._instance is None:
+            cls._instance = super().__call__(*args, **kwargs)
+        return cls._instance
+
+
+class InterfaceManager(metaclass=InterfaceManagerMeta):
+    def __init__(self):
+        self.__uuid = generate_uuid()
+        self.screens = {}
+
+    def use_screen(self, screen_name):
         pass

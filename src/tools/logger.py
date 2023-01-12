@@ -6,10 +6,11 @@ from os import rename
 
 try:
     with open(get_base_path() / SETTINGS['project']['logs'] / 'latest.log') as file:
-        last_time = file.readline().split('|')[1].rstrip().lstrip().replace(':', '-')
-
-    rename(get_base_path() / SETTINGS['project']['logs'] / 'latest.log',
-           get_base_path() / SETTINGS['project']['logs'] / f'{last_time}.log')
+        fist_row = file.readline().split('|')
+        if len(fist_row) > 1:
+            last_time = fist_row[1].rstrip().lstrip().replace(':', '-')
+            rename(get_base_path() / SETTINGS['project']['logs'] / 'latest.log',
+                   get_base_path() / SETTINGS['project']['logs'] / f'{last_time}.log')
 except FileNotFoundError as e:
     pass
 

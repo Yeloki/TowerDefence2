@@ -1,6 +1,3 @@
-
-
-
 class Vector2:
     def __init__(self, x, y):
         self.x = x
@@ -42,3 +39,18 @@ class Line:
         self._start_pos = start
         self._end_pos = end
         self._width = width
+
+    def near_point_on_vector(self, point):
+        x, y = point
+        x1, y1 = self._start_pos
+        x2, y2 = self._end_pos
+        length = (x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2)
+        pr = (x - x1) * (x2 - x1) + (y - y1) * (y2 - y1)
+        cf = pr / length
+        if cf < 0:
+            cf = 0
+        if cf > 1:
+            cf = 1
+        x_res = x1 + cf * (x2 - x1)
+        y_res = y1 + cf * (y2 - y1)
+        return Vector2(x_res, y_res)

@@ -64,12 +64,14 @@ class EnemyQueue:
 
         if self.__count == 0 and self.__status == self.STATUSES['active']:
             self.__status = self.STATUSES['ended']
+            logger.debug(f'Enemy queue with type {self.__enemy_type} ended',
+                         extra={'uuid': self.__uuid})
             return self.__status
 
         if now() - self.__time_of_last_spawn > self.__cooldown:
             uuid = generate_uuid()
-            logger.info(f'Created enemy with type: {self.__enemy_type}',
-                        extra={'uuid': uuid})
+            logger.debug(f'Created enemy with type: {self.__enemy_type}',
+                         extra={'uuid': uuid})
             self.__enemies_map[uuid] = Enemy(self.__enemy_hp, self.__enemy_speed, self.__enemy_type)
             self.__time_of_last_spawn = now()
             self.__count -= 1
@@ -111,6 +113,8 @@ class EnemiesManager(metaclass=EnemiesManagerMeta):
                            self.__wave_size,
                            self.__time_between_spawn,
                            self.__enemies)
+        logger.debug(f'Enemy queue with type {name} created',
+                     extra={'uuid': queue.get_uuid()})
         queue.start()
         self.__enemy_queues[queue.get_uuid()] = queue
         self.__waves_count += 1

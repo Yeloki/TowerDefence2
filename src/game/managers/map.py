@@ -66,6 +66,7 @@ class Map:
 
     def get_road_angle(self, road_index):
         road = self.__roads[road_index]
+        return road.get_angle()
 
 
 class MapManager:

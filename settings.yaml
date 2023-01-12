@@ -6,3 +6,6 @@ game:
   sell-tower: s
   pause: p
   exit: esc
+
+cheats:
+  money: m
