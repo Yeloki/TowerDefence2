@@ -34,7 +34,7 @@ LOG_CONFIG = {
     },
     'formatters': {
         'DEBUG': {
-            'format': f'{generate_uuid()} | %(asctime)s | %(name)s | %(levelname)-10s | %(uuid)s | %(message)s',
+            'format': f'%(asctime)s | %(name)s | %(levelname)-10s | {generate_uuid()} | %(uuid)s | %(message)s',
             'default': {'uuid': 'FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF'},
         },
 

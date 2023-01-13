@@ -1,7 +1,7 @@
 import pygame
 
 from base import Rect
-from tools import generate_uuid, logger
+from tools import generate_uuid, logger, get_screens_dir
 from .common import Color
 from .window import Window
 
@@ -121,6 +121,19 @@ class Widget:
 class Screen:
     def __init__(self, path):
         self.__uuid = generate_uuid()
+        self.__buttons = {}
+        self.__labels = {}
+        self.__objects = {}
+        self.__widgets = {}
+        self.__objects = {}
+        self.__background = None
+
+    def draw(self, screen):
+        for obj in self.__objects:
+            if hasattr(obj, 'draw'):
+                obj.draw(screen)
+
+    def update(self, event):
         pass
 
 
@@ -137,6 +150,21 @@ class InterfaceManager(metaclass=InterfaceManagerMeta):
     def __init__(self):
         self.__uuid = generate_uuid()
         self.screens = {}
+        self.current_screen = None
+        self.load_screens()
+
+    def load_screens(self):
+        screens_dir = get_screens_dir()
+        logger.info(screens_dir, extra={'uuid': self.__uuid})
 
     def use_screen(self, screen_name):
-        pass
+        self.current_screen = screen_name
+
+    def update(self, event):
+        for screen in self.screens.values():
+            screen.update(event)
+
+    def get_actual_screen(self):
+        if self.current_screen is None:
+            logger.error('You must set up screen before using it')
+        return self.screens[self.current_screen]

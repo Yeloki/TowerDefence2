@@ -47,6 +47,12 @@ def get_base_path() -> Path:
                        'and try again')
 
 
+def get_screens_dir() -> Path:
+    base = get_base_path()
+    screens = base / 'screens'
+    return screens
+
+
 def get_game_maps() -> List[Path]:
     from .settings import SETTINGS
     maps_dir = get_base_path() / SETTINGS['project']['maps']
