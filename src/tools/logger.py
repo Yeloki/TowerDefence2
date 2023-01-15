@@ -2,16 +2,17 @@ import logging
 import logging.config
 from .common import get_base_path, generate_uuid
 from .settings import SETTINGS
-from os import rename
+from os import rename, mkdir
 
 try:
-    with open(get_base_path() / SETTINGS['project']['logs'] / 'latest.log') as file:
+    with open(get_base_path() / SETTINGS['project']['logs'] / 'latest.log', "w+") as file:
         fist_row = file.readline().split('|')
         if len(fist_row) > 1:
             last_time = fist_row[1].rstrip().lstrip().replace(':', '-')
             rename(get_base_path() / SETTINGS['project']['logs'] / 'latest.log',
                    get_base_path() / SETTINGS['project']['logs'] / f'{last_time}.log')
 except FileNotFoundError as e:
+    mkdir(get_base_path() / SETTINGS['project']['logs'])
     pass
 
 LOG_CONFIG = {
