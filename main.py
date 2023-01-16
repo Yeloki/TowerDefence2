@@ -22,7 +22,7 @@ screen_height = 720
 minimal_screen_width = 320
 minimal_screen_height = 240
 screen = pygame.display.set_mode((screen_width, screen_height), flags=DOUBLEBUF)
-pygame.display.set_caption('Tower Defence')
+pygame.display.set_caption('Tower Defence 2')
 clock = pygame.time.Clock()
 
 
@@ -82,7 +82,7 @@ def menu() -> int:
         user_level.text = "User's level"
         settings.text = 'Settings'
         exit_btn.text = 'Exit'
-        name.text = 'Tower Defence'
+        name.text = 'Tower Defence 2'
     elif LANGUAGE == 'RUSSIAN':
         easy_game.text = 'Низкая\nсложность'
         medium_game.text = 'Средняя\nсложность'
@@ -91,7 +91,7 @@ def menu() -> int:
         user_level.text = "Пользовательский\nуровень"
         settings.text = 'Настройки'
         exit_btn.text = 'Выйти'
-        name.text = 'Tower Defence'
+        name.text = 'Tower Defence 2'
 
     easy_game.handler = 1
     medium_game.handler = 2
